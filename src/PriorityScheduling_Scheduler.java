@@ -1,22 +1,33 @@
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class PriorityScheduling_Scheduler {
 
-    public void schedule(List<Process> processes) {
-        processes.sort(Comparator.comparingInt(Process::getPriority).reversed());
+    public static void schedule(List<Process> processes) {
+        processes.sort(Comparator.comparingInt(Process::getArrivalTime));
+        PriorityQueue<Process> readyQueue = new PriorityQueue<>(Comparator
+            .comparingInt(Process::getPriority)  
+            .thenComparingInt(Process::getArrivalTime)); 
 
         int currentTime = 0;
+        int index = 0;
 
-        for (Process process : processes) {
-            if (currentTime < process.getArrivalTime()) {
-                currentTime = process.getArrivalTime();
+        while (index < processes.size() || !readyQueue.isEmpty()) {
+            while (index < processes.size() && processes.get(index).getArrivalTime() <= currentTime) {
+                readyQueue.offer(processes.get(index));
+                index++;
             }
 
-            process.setWaitingTime(currentTime - process.getArrivalTime());
+            if (readyQueue.isEmpty()) {
+                currentTime = processes.get(index).getArrivalTime();
+            } else {
+                Process currentProcess = readyQueue.poll();
+                currentProcess.setStarted(true);
+                currentProcess.setWaitingTime(currentTime - currentProcess.getArrivalTime());
 
-            process.setTurnaroundTime(process.getWaitingTime() + process.getBurstTime());
-            currentTime += process.getBurstTime();
-        }
-    }
-}
+                currentTime += currentProcess.getBurstTime();
+                currentProcess.setTurnaroundTime(currentProcess.getWaitingTime() + currentProcess.getBurstTime());
+            }
+        }}}
