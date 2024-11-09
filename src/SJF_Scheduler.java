@@ -5,11 +5,9 @@ public class SJF_Scheduler {
         int currentTime = 0;
         int completed = 0;
         int n = processes.size();
-        boolean[] isCompleted = new boolean[n];
-
-        // Loop until all processes are completed
+        boolean[] isCompleted = new boolean[n];        
         while (completed < n) {
-            // Find the process with the shortest burst time that has arrived
+ 
             int idx = -1;
             int minBurstTime = Integer.MAX_VALUE;
 
@@ -21,13 +19,13 @@ public class SJF_Scheduler {
                         idx = i;
                     } else if (process.getBurstTime() == minBurstTime
                             && process.getArrivalTime() < processes.get(idx).getArrivalTime()) {
-                        // If burst times are equal, pick the one that arrived first
+                   
                         idx = i;
                     }
                 }
             }
 
-            // If no process is ready to execute, move time forward
+   
             if (idx == -1) {
                 currentTime++;
             } else {
@@ -35,11 +33,9 @@ public class SJF_Scheduler {
                 process.setWaitingTime(currentTime - process.getArrivalTime());
                 process.setTurnaroundTime(process.getWaitingTime() + process.getBurstTime());
 
-                // Mark the process as completed
                 isCompleted[idx] = true;
                 completed++;
 
-                // Update current time by adding the burst time of the current process
                 currentTime += process.getBurstTime();
             }
         }
