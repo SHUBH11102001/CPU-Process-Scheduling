@@ -36,7 +36,8 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 ## Contributions
 Feel free to fork this repository and submit pull requests. You can also open issues if you encounter any problems or have suggestions for improvements.
       
-
+## Contact
+Created by `Shubh Nema`. Feel free to contact me at shubhnema617@gmail.com for any questions or feedback.
     
      
 
