@@ -4,12 +4,10 @@ public class Process {
     private int burstTime;
     private int waitingTime;
     private int turnaroundTime;
-    private int finishTime;  // Add finishTime to store the finish time of each process
+    private int finishTime;  
     private int priority;
-    private int responseTime = -1;  // New field for storing response time when process starts executing
+    private int responseTime = -1;  
     private boolean isStarted;
-
-    
 
 
 
@@ -28,11 +26,11 @@ public class Process {
     public int getBurstTime() { return burstTime; }
     public int getWaitingTime() { return waitingTime; }
     public int getTurnaroundTime() { return turnaroundTime; }
-    public int getFinishTime() { return finishTime; }  // Getter for finishTime
+    public int getFinishTime() { return finishTime; }  
     public int getPriority() {
         return priority;
     }
-    public int getResponseTime() { return responseTime; }  // Getter for responseTime
+    public int getResponseTime() { return responseTime; } 
     public boolean isStarted() { return isStarted; }
 
 
@@ -40,14 +38,14 @@ public class Process {
 
     public void setWaitingTime(int waitingTime) { this.waitingTime = waitingTime; }
     public void setTurnaroundTime(int turnaroundTime) { this.turnaroundTime = turnaroundTime; }
-    public void setFinishTime(int finishTime) { this.finishTime = finishTime; }  // Setter for finishTime
-    public void setResponseTime(int responseTime) { this.responseTime = responseTime; }  // Setter for responseTime
+    public void setFinishTime(int finishTime) { this.finishTime = finishTime; }  
+    public void setResponseTime(int responseTime) { this.responseTime = responseTime; } 
     public void setStarted(boolean started) { isStarted = started; }
 
 
 
     
-    // Add a setter for burstTime to update the remaining burst time
+ 
     public void setBurstTime(int burstTime) {
         this.burstTime = burstTime;
     }
