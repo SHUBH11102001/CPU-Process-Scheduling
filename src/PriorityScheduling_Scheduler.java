@@ -50,10 +50,9 @@ public class PriorityScheduling_Scheduler {
             }
         }
 
-        // Calculate averages
         averageWaitingTime = (double) totalWaitingTime / processes.size();
         averageTurnaroundTime = (double) totalTurnaroundTime / processes.size();
-        throughput = (double) processes.size() / (currentTime - initialTime); // All processes completed
+        throughput = (double) processes.size() / (currentTime - initialTime); 
     }
 
     public double getThroughput() {
