@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.text.DecimalFormat;
+
 
 public class CPU_Scheduler extends JFrame implements ActionListener {
     private JTextField numProcessesField, quantumField;
@@ -12,6 +14,8 @@ public class CPU_Scheduler extends JFrame implements ActionListener {
     private JComboBox<String> algorithmSelect;
     private JButton generateInputButton, calculateButton;
     private DefaultTableModel inputTableModel, outputTableModel;
+    private JLabel metricsLabel;
+
 
     public CPU_Scheduler() {
         setTitle("CPU Scheduling Algorithm Simulator");
@@ -28,7 +32,7 @@ public class CPU_Scheduler extends JFrame implements ActionListener {
 
         topPanel.add(new JLabel("Time Quantum (RR):"));
         quantumField = new JTextField(5);
-        quantumField.setEnabled(false);  
+        quantumField.setEnabled(false);  // Only enabled for Round Robin
         topPanel.add(quantumField);
 
         topPanel.add(new JLabel("Select Algorithm:"));
@@ -68,13 +72,20 @@ public class CPU_Scheduler extends JFrame implements ActionListener {
         outputPanel.setBorder(BorderFactory.createTitledBorder("Output"));
         outputPanel.add(new JScrollPane(outputTable), BorderLayout.CENTER);
         add(outputPanel, BorderLayout.SOUTH);
+
+        metricsLabel = new JLabel("Throughput: 0 | CPU Idle Time: 0 | Avg Waiting Time: 0 | Avg Turnaround Time: 0");
+        JPanel metricsPanel = new JPanel(new FlowLayout());
+        metricsPanel.add(metricsLabel);
+        outputPanel.add(metricsPanel, BorderLayout.SOUTH);
+
+        add(outputPanel, BorderLayout.SOUTH);
     }
 
     // Method to generate input fields based on the number of processes
     private void generateInputFields() {
         try {
             int numProcesses = Integer.parseInt(numProcessesField.getText().trim());
-            inputTableModel.setRowCount(0);  
+            inputTableModel.setRowCount(0);  // Clear existing rows
             for (int i = 1; i <= numProcesses; i++) {
                 inputTableModel.addRow(new Object[]{i, 0, 0, 0});
             }
@@ -98,29 +109,55 @@ public class CPU_Scheduler extends JFrame implements ActionListener {
             }
 
             String algorithm = (String) algorithmSelect.getSelectedItem();
-            outputTableModel.setRowCount(0); 
+            outputTableModel.setRowCount(0);  // Clear previous output
 
             switch (algorithm) {
                 case "FCFS" -> {
                     FCFS_Scheduler fcfs = new FCFS_Scheduler();
                     fcfs.schedule(processes);
+                    DecimalFormat df = new DecimalFormat("#.##");
+                    metricsLabel.setText("Throughput: " + df.format(fcfs.getThroughput()) +
+                        " | CPU Idle Time: " + fcfs.getCpuIdleTime() +
+                        " | Avg Waiting Time: " + df.format(fcfs.getAverageWaitingTime()) +
+                        " | Avg Turnaround Time: " + df.format(fcfs.getAverageTurnaroundTime()));
                 }
                 case "SJF" -> {
                     SJF_Scheduler sjf = new SJF_Scheduler();
                     sjf.schedule(processes);
+                    DecimalFormat df = new DecimalFormat("#.##");
+                    metricsLabel.setText("Throughput: " + df.format(sjf.getThroughput()) +
+                        " | CPU Idle Time: " + sjf.getCpuIdleTime() +
+                        " | Avg Waiting Time: " + df.format(sjf.getAverageWaitingTime()) +
+                        " | Avg Turnaround Time: " + df.format(sjf.getAverageTurnaroundTime()));
                 }
                 case "Round Robin" -> {
                     int quantum = Integer.parseInt(quantumField.getText().trim());
                     RR_Scheduler rr = new RR_Scheduler();
                     rr.schedule(processes, quantum);
+                    DecimalFormat df = new DecimalFormat("#.##");
+                    metricsLabel.setText("Throughput: " + df.format(rr.getThroughput()) +
+                        " | CPU Idle Time: " + rr.getCpuIdleTime() +
+                        " | Avg Waiting Time: " + df.format(rr.getAverageWaitingTime()) +
+                        " | Avg Turnaround Time: " + df.format(rr.getAverageTurnaroundTime()));
                 }
                 case "Priority Scheduling" -> {
                     PriorityScheduling_Scheduler priorityScheduler = new PriorityScheduling_Scheduler();
                     priorityScheduler.schedule(processes);
+                    DecimalFormat df = new DecimalFormat("#.##");
+                    metricsLabel.setText("Throughput: " + df.format(priorityScheduler.getThroughput()) +
+                        " | CPU Idle Time: " + priorityScheduler.getCpuIdleTime() +
+                        " | Avg Waiting Time: " + df.format(priorityScheduler.getAverageWaitingTime()) +
+                        " | Avg Turnaround Time: " + df.format(priorityScheduler.getAverageTurnaroundTime()));
+                    
                 }
                 case "SRTF"  ->{
                     SRTF_Scheduler srtf = new SRTF_Scheduler();
                     srtf.schedule(processes);
+                    DecimalFormat df = new DecimalFormat("#.##");
+                    metricsLabel.setText("Throughput: " + df.format(srtf.getThroughput()) +
+                        " | CPU Idle Time: " + srtf.getCpuIdleTime() +
+                        " | Avg Waiting Time: " + df.format(srtf.getAverageWaitingTime()) +
+                        " | Avg Turnaround Time: " + df.format(srtf.getAverageTurnaroundTime()));
                 }
             }
 
@@ -147,3 +184,4 @@ public class CPU_Scheduler extends JFrame implements ActionListener {
         });
     }
 }
+
