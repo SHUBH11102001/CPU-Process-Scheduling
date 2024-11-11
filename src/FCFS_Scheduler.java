@@ -2,19 +2,54 @@ import java.util.List;
 import java.util.Comparator;
 
 public class FCFS_Scheduler {
+    private double throughput;
+    private int cpuIdleTime;
+    private double averageWaitingTime;
+    private double averageTurnaroundTime;
+
     public void schedule(List<Process> processes) {
-        // Sort the processes by arrival time to ensure FCFS order
         processes.sort(Comparator.comparingInt(Process::getArrivalTime));
-        int currentTime = 0;
+
+        int initialTime = processes.get(0).getArrivalTime(); // Set to the arrival time of the first process
+        int currentTime = initialTime;
+        int totalWaitingTime = 0;
+        int totalTurnaroundTime = 0;
+        cpuIdleTime = 0;
+
         for (Process process : processes) {
-            // If the current time is less than the arrival time, move to the arrival time
             if (currentTime < process.getArrivalTime()) {
+                cpuIdleTime += process.getArrivalTime() - currentTime;
                 currentTime = process.getArrivalTime();
             }
+
             process.setWaitingTime(currentTime - process.getArrivalTime());
             process.setTurnaroundTime(process.getWaitingTime() + process.getBurstTime());
+
+            totalWaitingTime += process.getWaitingTime();
+            totalTurnaroundTime += process.getTurnaroundTime();
+
             currentTime += process.getBurstTime();
         }
+
+        averageWaitingTime = (double) totalWaitingTime / processes.size();
+        averageTurnaroundTime = (double) totalTurnaroundTime / processes.size();
+        throughput = (double) processes.size() / (currentTime - initialTime); // Elapsed time from first arrival to end
+    }
+
+    public double getThroughput() {
+        return throughput;
+    }
+
+    public int getCpuIdleTime() {
+        return cpuIdleTime;
+    }
+
+    public double getAverageWaitingTime() {
+        return averageWaitingTime;
+    }
+
+    public double getAverageTurnaroundTime() {
+        return averageTurnaroundTime;
     }
 }
 
