@@ -2,7 +2,7 @@
 
 This Java project implements several popular **CPU scheduling algorithms** to simulate and compare the performance of different scheduling strategies. The algorithms included are **First-Come, First-Served (FCFS)**, **Shortest Job First (SJF)**, **Shortest Remaining Time First (SRTF)**, **Round Robin (RR)**, and **Non preemptive Priority Scheduling**. Each algorithm handles the scheduling of processes based on different principles, providing insight into their behavior and efficiency.
 
-The application includes an intuitive **Graphical User Interface (GUI)** built using **Java Swing**. The interface is designed to allow easy input and interaction with scheduling processes, making the tool easily accessible.
+The application features an intuitive Graphical User Interface (GUI) built with **Java Swing**, enabling seamless input and interaction with CPU scheduling processes. Users can input essential details for each process. The interface displays a detailed table containing the Waiting Time and Turnaround Time for each process, allowing for easy comparison across processes. Additionally, it calculates and presents key performance metrics for each scheduling algorithm, including Throughput, CPU Idle Time, Average Waiting Time, and Average Turnaround Time.
 
 
 ## Algorithms Implemented
