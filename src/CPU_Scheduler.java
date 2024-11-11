@@ -32,7 +32,7 @@ public class CPU_Scheduler extends JFrame implements ActionListener {
 
         topPanel.add(new JLabel("Time Quantum (RR):"));
         quantumField = new JTextField(5);
-        quantumField.setEnabled(false);  // Only enabled for Round Robin
+        quantumField.setEnabled(false);  
         topPanel.add(quantumField);
 
         topPanel.add(new JLabel("Select Algorithm:"));
@@ -44,7 +44,6 @@ public class CPU_Scheduler extends JFrame implements ActionListener {
         });
         topPanel.add(algorithmSelect);
 
-        // Button to generate rows in the input table based on the number of processes
         generateInputButton = new JButton("Generate Input Fields");
         generateInputButton.addActionListener(e -> generateInputFields());
         topPanel.add(generateInputButton);
@@ -81,11 +80,11 @@ public class CPU_Scheduler extends JFrame implements ActionListener {
         add(outputPanel, BorderLayout.SOUTH);
     }
 
-    // Method to generate input fields based on the number of processes
+    
     private void generateInputFields() {
         try {
             int numProcesses = Integer.parseInt(numProcessesField.getText().trim());
-            inputTableModel.setRowCount(0);  // Clear existing rows
+            inputTableModel.setRowCount(0);  
             for (int i = 1; i <= numProcesses; i++) {
                 inputTableModel.addRow(new Object[]{i, 0, 0, 0});
             }
@@ -109,7 +108,7 @@ public class CPU_Scheduler extends JFrame implements ActionListener {
             }
 
             String algorithm = (String) algorithmSelect.getSelectedItem();
-            outputTableModel.setRowCount(0);  // Clear previous output
+            outputTableModel.setRowCount(0);  
 
             switch (algorithm) {
                 case "FCFS" -> {
